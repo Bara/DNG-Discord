@@ -12,7 +12,6 @@
 
 ConVar g_cColor = null;
 ConVar g_cWebhook = null;
-ConVar g_cWebhookTracker = null;
 
 char g_sSymbols[25][1] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
@@ -32,7 +31,6 @@ public void OnPluginStart()
     AutoExecConfig_SetFile("discord.calladmin");
     g_cColor = AutoExecConfig_CreateConVar("discord_calladmin_color", "#BE0000", "Discord/Slack attachment calladmin color.");
     g_cWebhook = AutoExecConfig_CreateConVar("discord_calladmin_webhook", "calladmin", "Config key from configs/discord.cfg.");
-    g_cWebhookTracker = AutoExecConfig_CreateConVar("discord_calladmin_webhook_tracker", "calladmin-tracker", "Config key from configs/discord.cfg.");
     AutoExecConfig_ExecuteFile();
     AutoExecConfig_CleanFile();
 }
@@ -102,33 +100,13 @@ public void CallAdmin_OnReportPost(int client, int target, const char[] reason)
         return;
     }
 
-    // Get server tracker webhook url
-    char sWebTracker[256], sHookTracker[256];
-    g_cWebhookTracker.GetString(sWebTracker, sizeof(sWebTracker));
-    if (!GetWebHook(sWebTracker, sHookTracker, sizeof(sHookTracker)))
-    {
-        LoopClients(i)
-        {
-            char sAuth[32];
-            GetClientAuthId(i, AuthId_SteamID64, sAuth, sizeof(sAuth));
-
-            if (StrEqual(sAuth, "76561198041923231", false))
-            {
-                PrintToChat(i, "Web: %s - Hook: %s", sWebTracker, sHookTracker);
-            }
-        }
-
-        SetFailState("Can't find webhook");
-        return;
-    }
-
     DiscordWebHook hook = new DiscordWebHook(sHook);
     // DiscordWebHook hookTracker = new DiscordWebHook(sHookTracker);
     hook.SlackMode = true;
     // hookTracker.SlackMode = true;
 
-    hook.SetUsername("§NG CallAdmin");
-    // hookTracker.SetUsername("§NG CallAdmin");
+    hook.SetUsername("CallAdmin");
+    // hookTracker.SetUsername("CallAdmin");
     hook.SetContent("<@&437389632649428994> -- New !calladmin report -->");
     // hookTracker.SetContent("<@&437389632649428994> -- New !calladmin report -->");
 
