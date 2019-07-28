@@ -2,7 +2,7 @@
 
 #include <sourcemod>
 #include <autoexecconfig>
-#include <sourcebans>
+#include <sourcebanspp>
 #include <sourcecomms>
 #include <discord>
 
@@ -37,18 +37,21 @@ public void OnPluginStart()
     AutoExecConfig_CleanFile();
 }
 
-public int SourceBans_OnBanPlayer(int client, int target, int time, char[] reason)
+public void SBPP_OnBanPlayer(int client, int target, int time, const char[] reason)
 {
     PrepareSourcebansMessage(client, target, time, reason);
 }
 
-public int SourceComms_OnBlockAdded(int client, int target, int time, int type, char[] reason)
+public void SourceComms_OnBlockAdded(int client, int target, int time, int type, char[] reason)
 {
 	PrepareSourcecommsMessage(client, target, time, type, reason);
 }
 
-public int PrepareSourcebansMessage(int client, int target, int time, char[] reason)
+public int PrepareSourcebansMessage(int client, int target, int time, const char[] sReason)
 {
+    char reason[512];
+    strcopy(reason, sizeof(reason), sReason);
+    
     EscapeString(reason, strlen(reason));
 
     char sHostname[512];
