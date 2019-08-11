@@ -134,7 +134,7 @@ public int PrepareSourcebansMessage(int client, int target, int time, const char
     DiscordWebHook hook = new DiscordWebHook(sHook);
     hook.SlackMode = true;
 
-    hook.SetUsername("SNG SourceBans");
+    hook.SetUsername("SourceBans");
 
     MessageEmbed Embed = new MessageEmbed();
 
