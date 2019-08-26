@@ -107,7 +107,7 @@ public void CallAdmin_OnReportPost(int client, int target, const char[] reason)
 
     hook.SetUsername("CallAdmin");
     // hookTracker.SetUsername("CallAdmin");
-    hook.SetContent("<@&437389632649428994> -- New !calladmin report -->");
+    hook.SetContent("<@557261830528172054> -- New !calladmin report -->");
     // hookTracker.SetContent("<@&437389632649428994> -- New !calladmin report -->");
 
     MessageEmbed Embed = new MessageEmbed();
